@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const usersmodel = require('../models/userModel');
+const moviesmodel = require('../models/movieModel');
 
 const addpage = (req, res) => {
     return res.render('add');
@@ -10,8 +10,8 @@ const addpage = (req, res) => {
 // ========== view Data ==========
 const viewpage = async (req, res) => {
     try {
-        const users = await usersmodel.find({})
-        return res.render('view', { users })
+        const movies = await moviesmodel.find({})
+        return res.render('view', { movies })
     } catch (error) {
         console.log(error);
         return false
@@ -23,13 +23,13 @@ const viewpage = async (req, res) => {
 const adddata = async (req, res) => {
     try {
         const { name, desc, price } = req.body;
-        await usersmodel.create({
+        await moviesmodel.create({
             name: name,
             desc: desc,
             price: price,
             image: req.file.path
         })
-        console.log(`user add`);
+        console.log(`movie add`);
         return res.redirect('/views');
     } catch (err) {
         console.log(err);
@@ -43,10 +43,10 @@ const deletedata = async (req, res) => {
     try {
         const id = req.query.id
 
-        let singal = await usersmodel.findById(id)
+        let singal = await moviesmodel.findById(id)
         fs.unlinkSync(singal.image)
 
-        await usersmodel.findByIdAndDelete(id)
+        await moviesmodel.findByIdAndDelete(id)
 
         return res.redirect('/views')
 
@@ -61,7 +61,7 @@ const deletedata = async (req, res) => {
 const edit = async (req, res) => {
     try {
         const id = req.query.id
-        const singal = await usersmodel.findById(id)
+        const singal = await moviesmodel.findById(id)
 
         return res.render('edit', {
             singal
@@ -78,9 +78,9 @@ const update = async (req, res) => {
     try {
         const { editid, name, desc, price } = req.body;
         if (req.file) {
-            let singal = await usersmodel.findById(editid)
+            let singal = await moviesmodel.findById(editid)
             fs.unlinkSync(singal.image)
-            await usersmodel.findByIdAndUpdate(editid, {
+            await moviesmodel.findByIdAndUpdate(editid, {
                 name: name,
                 desc: desc,
                 price: price,
@@ -89,9 +89,9 @@ const update = async (req, res) => {
 
             return res.redirect('/views')
         } else {
-            const single = await usersmodel.findById(editid);
+            const single = await moviesmodel.findById(editid);
 
-            await usersmodel.findByIdAndUpdate(editid, {
+            await moviesmodel.findByIdAndUpdate(editid, {
                 name: name,
                 desc: desc,
                 price: price,

@@ -8,7 +8,7 @@ app.set('view engine', 'ejs')
 
 app.use(express.urlencoded());
 
-app.use('/', require('./routes/indexRoute'));
+app.use('/', require('./routes/movieRoute'));
 
 const db = require('./config/db');
 

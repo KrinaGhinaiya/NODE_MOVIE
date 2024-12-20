@@ -2,12 +2,12 @@ const express = require('express');
 
 const routes = express.Router();
 
-const { addpage, viewpage, adddata, deletedata, edit, update } = require('../controllers/userController');
+const { addpage, viewpage, adddata, deletedata, edit, update } = require('../controllers/movieController');
 
 const multer=require('multer');
 
 const st = multer.diskStorage({
-    destination: (req, res, cb) => {
+    destination: (req, res, cb) => { 
         cb(null, 'uploads')
     },
     filename: (req, file, cb) => {
